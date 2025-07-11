@@ -1,27 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://ddrnnbr2a8bcj"]
+[gd_scene load_steps=15 format=3 uid="uid://ddrnnbr2a8bcj"]
 
 [ext_resource type="Script" uid="uid://ceofq802lb5of" path="res://scenes/player/scripts/character_body_2d.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://bl2nrcd32r3ao" path="res://scenes/player/assets/ExamplePlayerSprite.png" id="2_dovo2"]
+[ext_resource type="Script" uid="uid://iq8xx3blrbvb" path="res://scenes/player/scripts/state_machine.gd" id="3_gmlin"]
+[ext_resource type="Script" uid="uid://chu0snfggo6n0" path="res://scenes/player/scripts/idle_state.gd" id="4_lvxji"]
+[ext_resource type="Script" uid="uid://bxtyxvypadp3d" path="res://scenes/player/scripts/walk_state.gd" id="5_p47bc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gmlin"]
 radius = 11.0454
-
-[sub_resource type="Animation" id="Animation_dovo2"]
-resource_name = "idle_down"
-length = 0.4
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
 
 [sub_resource type="Animation" id="Animation_gmlin"]
 length = 0.001
@@ -38,8 +24,8 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_lvxji"]
-resource_name = "idle_up"
+[sub_resource type="Animation" id="Animation_dovo2"]
+resource_name = "idle_down"
 length = 0.4
 loop_mode = 2
 tracks/0/type = "value"
@@ -52,7 +38,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [7, 8, 9]
+"values": [0, 1, 2]
 }
 
 [sub_resource type="Animation" id="Animation_p47bc"]
@@ -72,6 +58,23 @@ tracks/0/keys = {
 "values": [14, 15, 16]
 }
 
+[sub_resource type="Animation" id="Animation_lvxji"]
+resource_name = "idle_up"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [7, 8, 9]
+}
+
 [sub_resource type="Animation" id="Animation_75vfm"]
 resource_name = "walk_down"
 length = 0.35
@@ -89,23 +92,6 @@ tracks/0/keys = {
 "values": [3, 4, 5, 6]
 }
 
-[sub_resource type="Animation" id="Animation_0owmy"]
-resource_name = "walk_up"
-length = 0.35
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [10, 11, 12, 13]
-}
-
 [sub_resource type="Animation" id="Animation_qek5x"]
 resource_name = "walk_side"
 length = 0.35
@@ -121,6 +107,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [17, 18, 19, 20]
+}
+
+[sub_resource type="Animation" id="Animation_0owmy"]
+resource_name = "walk_up"
+length = 0.35
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5gtgg"]
@@ -150,3 +153,12 @@ shape = SubResource("CircleShape2D_gmlin")
 libraries = {
 &"": SubResource("AnimationLibrary_5gtgg")
 }
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_gmlin")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_lvxji")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("5_p47bc")
