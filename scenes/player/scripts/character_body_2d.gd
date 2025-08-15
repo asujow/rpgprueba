@@ -13,13 +13,17 @@ func _ready() -> void:
 	state_machine.initialize(self)
 	pass
 	
-func _process(delta):
+func _process(_delta):
 	
-	direccion.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	direccion.y = Input.get_action_strength("down") - Input.get_action_strength("up")
+	#direccion.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+	#direccion.y = Input.get_action_strength("down") - Input.get_action_strength("up")
+	direccion = Vector2(
+		Input.get_axis( "left", "right" ),
+		Input.get_axis( "up", "down" )
+	).normalized()
 	pass
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	move_and_slide()
 
 
